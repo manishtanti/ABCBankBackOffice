@@ -1,0 +1,86 @@
+<form #profileForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="row heading">
+        <div class="col-lg-5"></div>
+        <div class="col-lg-4">
+            <h1>Edit Query Requests</h1>
+        </div>
+
+        <div class="col-lg-3">
+            <h2>Welcome {{employeeName}}</h2>
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-4"></div>
+        <label for="queryId" class="col-lg-2 col-form-label">Id:</label>
+        <div class="col-lg-3">
+            <input type="text" readonly class="form-control-plaintext" name="chequeNumber"
+                [(ngModel)]="queryRequest.queryId">
+
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-4"></div>
+        <label for="staticEmail" class="col-lg-2 col-form-label">Request Date:</label>
+        <div class="col-lg-3">
+            <!-- <input type="text" readonly class="form-control-plaintext" name="dob" [(ngModel)]="queryRequest.dob"> -->
+            <p>{{queryRequest.requestDate | date:'dd-MM-yyyy'}}</p>
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-4"></div>
+        <label for="staticEmail" class="col-lg-2 col-form-label">Details:</label>
+        <div class="col-lg-3">
+            <input type="text" readonly class="form-control-plaintext" name="requestDetails"
+                [(ngModel)]="queryRequest.requestDetails">
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-4"></div>
+        <label for="status" class="col-lg-2 col-form-label">Status:</label>
+        <div class="col-lg-3">
+            <select name="status" class="form-control" [(ngModel)]="queryRequest.status" #stat="ngModel" required
+                [class.is-invalid]="stat.invalid && stat.touched">
+                <option value="" selected>Select Status</option>
+                <option value="{{s}}" *ngFor="let s of status">{{s}}</option>
+            </select>
+            <br>
+            <small class="text-danger" [class.d-none]="stat.valid || stat.untouched">please select the
+                Status</small>
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-4"></div>
+        <label for="requestType" class="col-lg-2 col-form-label">Response:</label>
+        <div class="col-lg-3">
+            <textarea class="form-control" rows="5" name="response" [(ngModel)]="queryRequest.description"
+                #response="ngModel" required pattern=".{10,}"
+                [class.is-invalid]="response.invalid && response.touched"></textarea>
+            <div *ngIf="response.errors && (response.valid || response.touched)">
+                <small class="text-danger" *ngIf="response.errors.required">Please enter the response</small>
+                <small class="text-danger" *ngIf="response.errors.pattern">response should be atleast 10 characters
+                    long</small>
+            </div>
+        </div>
+        <div class="col-lg-3"></div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-lg-5"></div>
+        <div class="col-lg-2">
+            <button [disabled]="profileForm.form.invalid" class="btn btn-primary">Submit</button>
+        </div>
+        <div class="col-lg-5"></div>
+    </div>
+</form>
+<div class="row">
+    <div class="col-lg-5"></div>
+    <div class="col-lg-2"><button class="btn btn-primary" (click)="goBack()">Back</button></div>
+    <div class="col-lg-5"></div>
+</div>
